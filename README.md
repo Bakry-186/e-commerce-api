@@ -76,7 +76,6 @@ A RESTful eCommerce API built with Node.js and Express. This backend service han
 ## 📌 TODO / Upcoming Features
 
 - ✅ Payment Integration (e.g., Stripe)
-- ✅ Product Filtering & Pagination
 - ✅ Wishlist & Favorites
 - ✅ Rate Limiting & Security Middleware
 - ✅ Docker Support
