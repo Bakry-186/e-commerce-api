@@ -1,6 +1,7 @@
 import express from "express";
 
 import userCtrl from "../controllers/userCtrl.js";
+import adminValidator from "../utils/validators/adminValidator.js";
 import userValidator from "../utils/validators/userValidator.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import authorizeRoles from "../middlewares/role.js";
@@ -15,10 +16,26 @@ router.get(
 );
 
 router.put(
+  "/change-my-password",
+  verifyToken,
+  userValidator.changePasswordValidator,
+  userCtrl.changeLoggedUserPassword
+);
+
+router.put(
+  "/update-my-data",
+  verifyToken,
+  userValidator.updateUserValidator,
+  userCtrl.updateLoggedUserData
+);
+
+router.delete("/delete-me", verifyToken, userCtrl.deleteLoggedUserData);
+
+router.put(
   "/change-password/:id",
   verifyToken,
   authorizeRoles("admin", "manager"),
-  userValidator.changePasswordValidator,
+  adminValidator.changePasswordValidator,
   userCtrl.changePassword
 );
 
@@ -30,25 +47,25 @@ router
     authorizeRoles("admin", "manager"),
     userCtrl.uploadUserImage,
     userCtrl.resizeImage,
-    userValidator.createUserValidator,
+    adminValidator.createUserValidator,
     userCtrl.createUser
   );
 
 router
   .route("/:id")
-  .get(userValidator.getUserValidator, userCtrl.getUser)
+  .get(adminValidator.getUserValidator, userCtrl.getUser)
   .put(
     verifyToken,
     authorizeRoles("admin", "manager"),
     userCtrl.uploadUserImage,
     userCtrl.resizeImage,
-    userValidator.updateUserValidator,
+    adminValidator.updateUserValidator,
     userCtrl.updateUser
   )
   .delete(
     verifyToken,
     authorizeRoles("admin"),
-    userValidator.deleteUserValidator,
+    adminValidator.deleteUserValidator,
     userCtrl.deleteUser
   );
 

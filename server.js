@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 
 import "dotenv/config";
 import express from "express";
+import cookieParser from "cookie-parser";
 import "./config/connect.js"; // Connect with db
 // Routes
 import categoryRouter from "./routes/categoryRoutes.js";
@@ -21,6 +22,7 @@ const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Middlewares
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "uploads")));
 

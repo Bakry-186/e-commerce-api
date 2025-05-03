@@ -101,6 +101,39 @@ export const getLoggedUserData = asyncHandler(async (req, res, next) => {
   next();
 });
 
+export const changeLoggedUserPassword = asyncHandler(async (req, res, next) => {
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      password: await bcrypt.hash(req.body.password, 10),
+      passwordChangedAt: Date.now(),
+    },
+    { new: true }
+  );
+
+  res.clearCookie("Authorization").status(200).json({
+    message: "Password changed successfully please login.",
+  });
+});
+
+export const updateLoggedUserData = asyncHandler(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ data: user });
+});
+
+export const deleteLoggedUserData = asyncHandler(async (req, res, next) => {
+  await User.findByIdAndDelete(req.user._id);
+});
+
 const userCtrl = {
   getUsers,
   getUser,
@@ -111,6 +144,9 @@ const userCtrl = {
   resizeImage,
   changePassword,
   getLoggedUserData,
+  changeLoggedUserPassword,
+  updateLoggedUserData,
+  deleteLoggedUserData,
 };
 
 export default userCtrl;

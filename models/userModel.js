@@ -30,10 +30,6 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin", "manager"],
       default: "user",
     },
-    active: {
-      type: Boolean,
-      default: true,
-    },
     passwordChangedAt: Date,
     PasswordResetCode: String,
     PasswordResetExpires: Date,
