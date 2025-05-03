@@ -93,6 +93,14 @@ export const changePassword = asyncHandler(async (req, res, next) => {
 // @access Private/Admin
 export const deleteUser = factory.deleteOne(User);
 
+// @desc    Get Logged user data
+// @route   GET /api/v1/users/getMe
+// @access  Private/Protect
+export const getLoggedUserData = asyncHandler(async (req, res, next) => {
+  req.params.id = req.user._id;
+  next();
+});
+
 const userCtrl = {
   getUsers,
   getUser,
@@ -102,6 +110,7 @@ const userCtrl = {
   uploadUserImage,
   resizeImage,
   changePassword,
+  getLoggedUserData,
 };
 
 export default userCtrl;
