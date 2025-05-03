@@ -37,6 +37,12 @@ export const login = asyncHandler(async (req, res, next) => {
     { expiresIn: "7d" }
   );
 
+  res.cookie("Authorization", `Bearer ${token}`, {
+    expires: new Date(Date.now() + 15 * 60 * 1000), // 15 min
+    httpOnly: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === "production",
+  });
+
   res.status(200).json({ data: user, token });
 });
 
@@ -108,7 +114,7 @@ export const verifiyPassResetCode = asyncHandler(async (req, res, next) => {
   res.status(200).json({ message: "Code verified, you may reset password" });
 });
 
-export const resetPassword= asyncHandler(async (req, res, next) => {
+export const resetPassword = asyncHandler(async (req, res, next) => {
   // Get user based on email
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
@@ -137,5 +143,11 @@ export const resetPassword= asyncHandler(async (req, res, next) => {
   res.status(200).json({ token });
 });
 
-const authCtrl = { signup, login, forgotPassword, verifiyPassResetCode, resetPassword };
+const authCtrl = {
+  signup,
+  login,
+  forgotPassword,
+  verifiyPassResetCode,
+  resetPassword,
+};
 export default authCtrl;
