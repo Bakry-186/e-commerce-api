@@ -34,7 +34,7 @@ export const login = asyncHandler(async (req, res, next) => {
   const token = jwt.sign(
     { userId: user._id },
     process.env.JWT_SECRET_ACCESS_KEY,
-    { expiresIn: "7d" }
+    { expiresIn: "15m" }
   );
 
   res.cookie("Authorization", `Bearer ${token}`, {
@@ -44,6 +44,15 @@ export const login = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({ data: user, token });
+});
+
+// @desc Logout
+// @route POST /api/v1/auth/logout
+// @access Public
+export const logout = asyncHandler(async (req, res, next) => {
+  res.clearCookie("Authorization").status(200).json({
+    message: "Logged out successfully",
+  });
 });
 
 // @desc Forgot password
@@ -137,7 +146,7 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
   const token = jwt.sign(
     { userId: user._id },
     process.env.JWT_SECRET_ACCESS_KEY,
-    { expiresIn: "7d" }
+    { expiresIn: "15m" }
   );
 
   res.status(200).json({ token });
@@ -149,5 +158,6 @@ const authCtrl = {
   forgotPassword,
   verifiyPassResetCode,
   resetPassword,
+  logout,
 };
 export default authCtrl;

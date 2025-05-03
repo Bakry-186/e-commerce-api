@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.post("/signup", authValidator.signupValidator, authCtrl.signup);
 router.post("/login", authValidator.loginValidator, authCtrl.login);
+router.post("/logout", authCtrl.logout);
+
 router.post(
   "/forgot-password",
   authValidator.forgotPasswordValidator,
