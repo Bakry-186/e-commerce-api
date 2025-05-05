@@ -5,8 +5,11 @@ import adminValidator from "../utils/validators/adminValidator.js";
 import userValidator from "../utils/validators/userValidator.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import authorizeRoles from "../middlewares/role.js";
+import reviewRouter from "./reviewRoutes.js";
 
 const router = express.Router();
+
+router.use("/:userId/reviews", reviewRouter);
 
 router.get(
   "/get-me",

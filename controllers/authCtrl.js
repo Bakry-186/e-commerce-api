@@ -149,7 +149,14 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
     { expiresIn: "15m" }
   );
 
-  res.status(200).json({ token });
+  res
+    .cookie("Authorization", `Bearer ${token}`, {
+      expires: new Date(Date.now() + 15 * 60 * 1000),
+      httpOnly: (process.env.NODE_ENV = "production"),
+      secure: (process.env.NODE_ENV = "production"),
+    })
+    .status(200)
+    .json({ token });
 });
 
 const authCtrl = {

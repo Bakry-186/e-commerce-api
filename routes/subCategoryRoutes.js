@@ -10,7 +10,7 @@ const router = express.Router({ mergeParams: true });
 
 router
   .route("/")
-  .get(subCategoryCtrl.getSubCategories)
+  .get(subCategoryCtrl.createFilterObj, subCategoryCtrl.getSubCategories)
   .post(
     verifyToken,
     authorizeRoles("admin", "manager"),

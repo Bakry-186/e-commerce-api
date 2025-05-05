@@ -4,8 +4,11 @@ import productCtrl from "../controllers/productCtrl.js";
 import productValidator from "../utils/validators/productValidator.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import authorizeRoles from "../middlewares/role.js";
+import reviewRouter from "./reviewRoutes.js";
 
 const router = express.Router();
+
+router.use("/:productId/reviews", reviewRouter);
 
 router
   .route("/")

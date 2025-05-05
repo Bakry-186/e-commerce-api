@@ -11,16 +11,22 @@ export const setCategoryIdToBody = (req, res, next) => {
 // @desc Get list of subCategories that belong to specific category
 // GET /api/categories/:categoryId/subcategories
 // @access Public
+export const createFilterObj = (req, res, next) => {
+  let filterObj = {};
+  if (req.params.categoryId) filterObj = { category: req.params.categoryId };
+  req.filterObj = filterObj;
+  next();
+};
 
 // @desc Create subCategories that belong to specific category
 // POST /api/categories/:categoryId/subcategories
 // @access Private/Admin-Manager
 
-
 // @desc Get list of subCategories
 // @route GET /api/v1/subcategories
 // @access Public
 export const getSubCategories = factory.getAll(SubCategory);
+
 // @desc Get specific subCategory by id
 // @route GET /api/v1/subcategories/:id
 // @access Public
@@ -48,5 +54,6 @@ const subCategoryCtrl = {
   createSubCategory,
   updateSubCategory,
   deleteSubCategory,
+  createFilterObj,
 };
 export default subCategoryCtrl;

@@ -15,7 +15,7 @@ export const verifyToken = async (req, res, next) => {
   // Verify token
   const decode = jwt.verify(token, process.env.JWT_SECRET_ACCESS_KEY);
 
-  // Check if user exits
+  // Check if user exist
   const user = await User.findById(decode.userId);
   if (!user) {
     return next(new ApiError("User no longer exists", 401));

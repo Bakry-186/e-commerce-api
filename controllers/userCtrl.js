@@ -25,6 +25,11 @@ export const resizeImage = asyncHandler(async (req, res, next) => {
   next();
 });
 
+// export const setUserIdToBody = (req, res, next) => {
+//   if (!req.body.user) req.body.user = req.user._id;
+//   next();
+// };
+
 // @desc Get list of users
 // @route GET /api/v1/users
 // @access Private/Admin
@@ -147,6 +152,7 @@ const userCtrl = {
   changeLoggedUserPassword,
   updateLoggedUserData,
   deleteLoggedUserData,
+  // setUserIdToBody,
 };
 
 export default userCtrl;
